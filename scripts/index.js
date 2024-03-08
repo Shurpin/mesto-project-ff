@@ -10,7 +10,7 @@ function removeCard(cardElement) {
 };
 
 // @todo: Функция создания карточки
-function addCard(listItem) {
+function createCard(listItem, hanldeDelete) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   cardElement.querySelector('.card__image').src = listItem.link;
@@ -19,15 +19,15 @@ function addCard(listItem) {
  
   const deleteButton = cardElement.querySelector('.card__delete-button');
   deleteButton.addEventListener('click', function () {
-  removeCard(cardElement);
+    hanldeDelete(cardElement);
   }); 
-
-  cardContainer.append(cardElement);
+  return cardElement;
  }
 
 // @todo: Вывести карточки на страницу
 
 initialCards.forEach(function (item) {
-  addCard(item);
+  const newCardElement = createCard(item, removeCard);
+  cardContainer.append(newCardElement);
 });
 
