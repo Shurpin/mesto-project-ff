@@ -31,15 +31,13 @@ export function removeCard(cardElement) {
 }
 
 // @todo: Функция создания карточки
-export function createCard(listItem, hanldeDelete, listPopupImage) {
+export function createCard(listItem, hanldeDelete, listPopupImage, closelistPopupImage) {
   const cardTemplate = document.querySelector("#card-template").content;
-  const cardElement = cardTemplate
-    .querySelector(".places__item")
-    .cloneNode(true);
+  const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
   cardElement.querySelector(".card__image").src = listItem.link;
   cardElement.querySelector(".card__image").alt = listItem.name;
   cardElement.querySelector(".card__title").textContent = listItem.name;
-
+console.log(cardTemplate, cardElement)
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", function () {
     hanldeDelete(cardElement);
@@ -48,8 +46,14 @@ export function createCard(listItem, hanldeDelete, listPopupImage) {
   const addPopupImage = document.querySelector(".popup_type_image");
 
   const activePopupImage = cardElement.querySelector(".card__image");
- activePopupImage.addEventListener("click", function () {
+  activePopupImage.addEventListener("click", function () {
     listPopupImage(addPopupImage, listItem.link);
   });
+
+  const closePopupImage = addPopupImage.querySelector(".popup__close");
+  closePopupImage.addEventListener("click", function () {
+    closelistPopupImage(addPopupImage);
+  });
+
   return cardElement;
 }
