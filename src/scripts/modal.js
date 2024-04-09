@@ -1,12 +1,9 @@
-import { initialCards, createCard, removeCard } from "./cards.js";
+import { createCard, removeCard } from "./cards.js";
 
 // Находим форму в DOM
-//  const formCard = document.forms["new-place"];
 const formElement = document.querySelector(".popup__form");
 const formElements = document.querySelector(".popup__forms");
 // Находим поля формы в DOM
-// const nameInput = formElement.elements.name;
-// const jobInput = formElement.elements.description;
 const nameInput = formElement.querySelector(".popup__input_type_name");
 const jobInput = formElement.querySelector(".popup__input_type_description");
 //находим новые значения для вставки в формы
@@ -19,7 +16,6 @@ jobInput.value = profileDescription.textContent;
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleFormSubmit(evt) {
-  console.log(evt);
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   // Так мы можем определить свою логику отправки.
   // О том, как это делать, расскажем позже.
@@ -27,10 +23,8 @@ function handleFormSubmit(evt) {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   const openedPopup = document.querySelector(".popup_is-opened");
-  //popup_type_new-card
   const newCardModal = document.querySelector(".popup");
   if (newCardModal.classList.contains("popup_type_new-card")) {
-    // вставляем новые значения с помощью textContent
     const name = document.querySelector(".popup__input_type_card-name");
     const link = document.querySelector(".popup__input_type_url");
     const listItem = { name, link };
@@ -43,13 +37,12 @@ function handleFormSubmit(evt) {
 function handleFormSubmitNewCard(evt) {
   evt.preventDefault();
   const container = document.querySelector(".places__list");
-  // const cardContainer = container.querySelector(".places__list");
   const openedPopup = document.querySelector(".popup_is-opened");
   const name = document.querySelector(".popup__input_type_card-name").value;
   const link = document.querySelector(".popup__input_type_url").value;
   const listItem = { name, link };
   const newCard = createCard(listItem, removeCard, openPopup, closePopup);
-   formElements.reset();
+  formElements.reset();
   container.prepend(newCard);
   closePopup(openedPopup);
 }

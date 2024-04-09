@@ -9,7 +9,7 @@ import { closePopup } from "./scripts/modal.js";
 const container = document.querySelector(".places");
 const cardContainer = container.querySelector(".places__list");
 
-//нашел в DOM классы для создания/удаления popapa "Редактировать"
+//нашел в DOM классы для создания/удаления popupa "Редактировать"
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 
@@ -23,24 +23,30 @@ initialCards.forEach(function (item) {
   cardContainer.append(newCardElement);
 });
 
-//вызов функции открытия попа "Редактировать"
+//вызов функции открытия попа "Редактировать" и анимация
 profileEditButton.addEventListener("click", function () {
+  popupTypeEdit.classList.add("popup_is-animated");
   openPopup(popupTypeEdit);
 });
 
-//нашел в DOM классы для popapa "+"
+//нашел в DOM классы для popapa "+" и анимация
 profileAddButton.addEventListener("click", function () {
+  popupTypeNewCard.classList.add("popup_is-animated");
   openPopup(popupTypeNewCard);
 });
 
-//вешаю слушатель с событием клик на кнопку с классом  popup__close 
+//вешаю слушатель с событием клик на кнопку с классом  popup__close
 //в попапе "Редактировать" с классом profile__edit-button и вызываю функцию закрытия попа
-popupTypeEdit.querySelector(".popup__close").addEventListener("click", function () {
-  closePopup(popupTypeEdit);
-});
+popupTypeEdit
+  .querySelector(".popup__close")
+  .addEventListener("click", function () {
+    closePopup(popupTypeEdit);
+  });
 
-//вешаю слушатель с событием клик на кнопку с классом  popup__close 
+//вешаю слушатель с событием клик на кнопку с классом  popup__close
 //в попапе "+" с классом popup_type_new-card и вызываю функцию закрытия попа closePopup
-popupTypeNewCard.querySelector(".popup__close").addEventListener("click", function () {
-  closePopup(popupTypeNewCard);
-}); 
+popupTypeNewCard
+  .querySelector(".popup__close")
+  .addEventListener("click", function () {
+    closePopup(popupTypeNewCard);
+  });
