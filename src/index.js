@@ -1,8 +1,8 @@
 import "../src/pages/index.css";
 import "./scripts/cards.js";
 import { initialCards } from "./scripts/cards.js";
-import { createCard } from "./scripts/cards.js";
-import { removeCard } from "./scripts/cards.js";
+import { createCard } from "./scripts/card.js";
+import { removeCard } from "./scripts/card.js";
 import { openPopup } from "./scripts/modal.js";
 import { closePopup } from "./scripts/modal.js";
 // @todo: DOM узлы

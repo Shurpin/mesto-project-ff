@@ -1,4 +1,4 @@
-import { createCard, removeCard } from "./cards.js";
+import { createCard, removeCard } from "./card.js";
 
 // Находим форму в DOM
 const formElement = document.querySelector(".popup__form");
