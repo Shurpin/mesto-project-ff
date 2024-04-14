@@ -1,6 +1,3 @@
-// import { createCard, removeCard } from "./card.js";
-import { nameInput, jobInput, profileTitle, profileDescription } from "../index.js";
-
 // общий код
 // Закрытие попапа
 export function closePopup(modalElement) {
@@ -8,24 +5,15 @@ export function closePopup(modalElement) {
     modalElement.classList.remove("popup_is-opened");
     document.removeEventListener("keydown", closeEsс);
     document.removeEventListener("click", closeOverlay);
-    // if (modalElement.classList.contains("popup_type_edit")) {
-    //   nameInput.value = '';
-    //   jobInput.value = '';
-    // }
   }
 }
 
 // Открытие попапа
-export function openPopup(innerPopup, link) {
+export function openPopup(innerPopup) {
   innerPopup.classList.add("popup_is-opened");
 
   document.addEventListener("keydown", closeEsс);
-  const popup = document.querySelector(".popup_is-opened");
-  popup.addEventListener("click", closeOverlay);
-  if (innerPopup.classList.contains("popup_type_edit")) {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileDescription.textContent;
-  }
+  innerPopup.addEventListener("click", closeOverlay);
 }
 
 // Дополнительные общие функции

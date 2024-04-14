@@ -1,4 +1,3 @@
-import { popupImage } from "../index.js";
 // @todo: Функция удаления карточки
 export function removeCard(cardElement) {
   cardElement.remove();
@@ -18,9 +17,8 @@ export function addLikeListener(cardElement) {
 // @todo: Функция создания карточки
 export function createCard(listItem, hanldeDelete, openPopupImage, addPopupImage) {
   const cardTemplate = document.querySelector("#card-template").content;
-  const cardElement = cardTemplate
-    .querySelector(".places__item")
-    .cloneNode(true);
+  const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
+
   const activePopupImage = cardElement.querySelector(".card__image");
     activePopupImage.src = listItem.link;
     activePopupImage.alt = listItem.name;
@@ -30,12 +28,10 @@ export function createCard(listItem, hanldeDelete, openPopupImage, addPopupImage
     hanldeDelete(cardElement);
   });
   addLikeListener(cardElement);
-  addPopupImage.classList.add("popup_is-animated");
+
   activePopupImage.addEventListener("click", function () {
-    const checkLink = listItem.link;
-    const altName = listItem.name;
-      popupImage.src = checkLink;
-      popupImage.alt = altName;
+      popupImage.src = listItem.link;
+      popupImage.alt = listItem.name;
     openPopupImage(addPopupImage);
   });
   return cardElement;
