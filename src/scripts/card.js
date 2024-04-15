@@ -1,38 +1,30 @@
-// @todo: Функция удаления карточки
-export function removeCard(cardElement) {
-  cardElement.remove();
-}
-
- function addLike(evt) {
-   evt.target.classList.toggle("card__like-button_is-active"); 
-}
-
-export function addLikeListener(cardElement) {
-  const cardButton = cardElement.querySelector(".card__like-button");
-  if (Boolean(cardButton)) {
-  cardButton.addEventListener("click", addLike);
-}
-}
+import { openPopup } from "./modal";
 
 // @todo: Функция создания карточки
-export function createCard(listItem, hanldeDelete, openPopupImage, addPopupImage) {
+export function createCard({
+  item,
+  popupImage,
+  popupImageWrapper,
+  addLikeListener,
+  zoomImageOutListener,
+  deleteCardListener,
+}) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
 
   const activePopupImage = cardElement.querySelector(".card__image");
-    activePopupImage.src = listItem.link;
-    activePopupImage.alt = listItem.name;
-  cardElement.querySelector(".card__title").textContent = listItem.name;
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", function () {
-    hanldeDelete(cardElement);
-  });
+  activePopupImage.src = item.link;
+  activePopupImage.alt = item.name;
+  cardElement.querySelector(".card__title").textContent = item.name;
+  deleteCardListener(cardElement);
   addLikeListener(cardElement);
-
-  activePopupImage.addEventListener("click", function () {
-      popupImage.src = listItem.link;
-      popupImage.alt = listItem.name;
-    openPopupImage(addPopupImage);
+  zoomImageOutListener({
+    listItem: item,
+    activePopupImage,
+    popupImage,
+    popupImageWrapper,
+    openPopup, 
   });
+
   return cardElement;
 }
