@@ -32,7 +32,7 @@ const popupCaption = popupImageWrapper.querySelector('.popup__caption')
 const animatedPopups = document.querySelectorAll(".popup");
 
 // place
-const formEditNewPlace = document.querySelector(".popup__forms");
+const FormEditNewPlace = document.querySelector(".popup__forms");
 const cardAddName = document.querySelector(".popup__input_type_card-name");
 const cardAddLink = document.querySelector(".popup__input_type_url");
 
@@ -44,41 +44,14 @@ function getFormValues() {
 }
 
 // слушатели
-// лайк
-function addLike(evt) {
-  evt.target.classList.toggle("card__like-button_is-active"); 
-}
-export function addLikeListener(cardElement) {
-  const cardButton = cardElement.querySelector(".card__like-button");
-  if (Boolean(cardButton)) {
-  cardButton.addEventListener("click", addLike);
-}
-}
-
-// удаление
-export function removeCard(cardElement) {
-  cardElement.remove();
-}
-export function deleteCardListener(cardElement) {
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", function () {
-    removeCard(cardElement);
-  });
-};
-
-function zoomImageOutListener({
-  popupImage, 
-  popupImageWrapper,
+function zoomImageOut({
   listItem,
-  activePopupImage,
   openPopup, 
 }) {
-  activePopupImage.addEventListener("click", function () {
     popupImage.src = listItem.link;
     popupImage.alt = listItem.name;
     popupCaption.textContent = listItem.name;
     openPopup(popupImageWrapper);
-  });
 }
 
 // Создаем новую карточку и закрываем попап
@@ -86,11 +59,7 @@ function createAndCloseCard() {
   const item = getFormValues();
   const newCard = createCard({
     item,
-    popupImage,
-    popupImageWrapper: popupImageWrapper,
-    zoomImageOutListener: zoomImageOutListener,
-    deleteCardListener,
-    addLikeListener,
+    zoomImageOut,
   });
   closePopup(popupTypeNewCard);
   return newCard;
@@ -101,7 +70,7 @@ function handleEditNewCardSubmit(evt) {
   evt.preventDefault();
   const newCard = createAndCloseCard();
   cardContainer.prepend(newCard);
-  formEditNewPlace.reset();
+  FormEditNewPlace.reset();
 }
 
 function handleEditProfileSubmit(evt) {
@@ -119,11 +88,7 @@ function handleEditProfileSubmit(evt) {
 initialCards.forEach(function (item) {
   const newCardElement = createCard({
     item,
-    popupImage,
-    popupImageWrapper,
-    zoomImageOutListener: zoomImageOutListener,
-    deleteCardListener,
-    addLikeListener,
+    zoomImageOut,
   });
   cardContainer.append(newCardElement);
 });
@@ -135,7 +100,7 @@ animatedPopups.forEach((item) => {
 
 // Подписываемся на события сабмит
 formFillInput.addEventListener("submit", handleEditProfileSubmit);
-formEditNewPlace.addEventListener("submit", handleEditNewCardSubmit);
+FormEditNewPlace.addEventListener("submit", handleEditNewCardSubmit);
 
 // подписываемся на клик "Редактировать"
 profileEditButton.addEventListener("click", function () {
