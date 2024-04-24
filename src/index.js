@@ -1,5 +1,6 @@
 import "../src/pages/index.css";
 import "./scripts/cards.js";
+import "./scripts/validation.js";
 import { initialCards } from "./scripts/cards.js";
 import { createCard } from "./scripts/card.js";
 import { openPopup, closePopup } from "./scripts/modal.js";
@@ -130,3 +131,6 @@ popupCloseImage.addEventListener("click", function () {
 popupTypeNewCard.querySelector(".popup__close").addEventListener("click", function () {
     closePopup(popupTypeNewCard);
   });
+
+
+
