@@ -3,6 +3,7 @@ import "./scripts/cards.js";
 import "./scripts/validation.js";
 import { initialCards } from "./scripts/cards.js";
 import { createCard } from "./scripts/card.js";
+import { enableValidation, clearValidation } from "./scripts/validation.js";
 import { openPopup, closePopup } from "./scripts/modal.js";
 // @todo: DOM узлы
 // Кэшируем элементы DOM
@@ -36,6 +37,17 @@ const animatedPopups = document.querySelectorAll(".popup");
 const FormEditNewPlace = document.querySelector(".popup__forms");
 const cardAddName = document.querySelector(".popup__input_type_card-name");
 const cardAddLink = document.querySelector(".popup__input_type_url");
+
+
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
 
 function getFormValues() {
   return {
@@ -110,6 +122,7 @@ profileEditButton.addEventListener("click", function () {
     jobInput.value = profileDescription.textContent;
   }
   openPopup(popupTypeEdit);
+  //clearValidation(formFillInput, validationConfig);
 });
 
 //подписываемся на клик по "+"
@@ -129,8 +142,12 @@ popupCloseImage.addEventListener("click", function () {
 //вешаю слушатель с событием клик на кнопку с классом  popup__close
 //в попапе "+" с классом popup_type_new-card и вызываю функцию закрытия попа closePopup
 popupTypeNewCard.querySelector(".popup__close").addEventListener("click", function () {
+  clearValidation(formFillInput, validationConfig);
     closePopup(popupTypeNewCard);
   });
 
-
-
+  // const inputList = Array.from(document.querySelectorAll('.popup__input'));
+  // clearValidation(inputList, enableValidation);
+  
+  enableValidation(validationConfig); 
+  

@@ -9,9 +9,17 @@ const showInputError = (formElement, inputElement, errorMessage, validationConfi
 //скрывает элемент ошибки;
 const hideInputError = (formElement, inputElement, validationConfig) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(validationConfig.inputErrorClass);
-  errorElement.classList.remove(validationConfig.errorClass);
-  errorElement.textContent = "";
+  console.log('inputElement', inputElement)
+  console.log('errorElement', errorElement)
+  console.log('validationConfig', Array.from(errorElement?.classList))
+  
+  
+  // inputElement.classList.remove(validationConfig.inputErrorClass);
+  if(Array.from(errorElement?.classList).includes(validationConfig.errorClass).length) {
+    console.log('validationConfig!!!', Array.from(errorElement?.classList).includes(validationConfig.errorClass))
+    errorElement.classList.remove(validationConfig.errorClass);
+    errorElement.textContent = "";
+  }
 };
 
 const checkInputValidity = (formElement, inputElement, validationConfig) => {
@@ -48,9 +56,8 @@ const setEventListeners = (formElement, validationConfig) => {
   });
 };
 
-const enableValidation = (validationConfig) => {
+export const enableValidation = (validationConfig) => {
   const forms = document.querySelectorAll(validationConfig.formSelector);
-  console.log('forms', forms);
   forms.forEach((formElement) => {
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -89,15 +96,16 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
 
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
 
+export function clearValidation(formElement, validationConfig) {
+  const {inputSelector, submitButtonSelector, inactiveButtonClass} = validationConfig; // деструктуризация, взял свойство объекта validationConfig
+  const inputs = Array.from(formElement.querySelectorAll(inputSelector));
+  inputs.forEach((input) => {
+    hideInputError(formElement, input, validationConfig);
+  }); 
+  if(Array.from(submitButtonSelector?.classList).includes(inactiveButtonClass).length) {
+    submitButtonSelector.classList.remove(inactiveButtonClass);
+  }
+  //submitButtonSelector.classList.remove(inactiveButtonClass);
+};
