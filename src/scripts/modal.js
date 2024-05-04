@@ -13,9 +13,10 @@ export function closePopup(modalElement) {
 // Открытие попапа
 export function openPopup(innerPopup) {
   innerPopup.classList.add("popup_is-opened");
-  // loadButton.textContent = 'Сохранить';
-  const loadButton = innerPopup.querySelector('.popup__button');
-  loadButton.textContent = 'Сохранить';
+  // добавил кнопке попапа текст
+  const textButton = innerPopup.querySelector(".popup__button");
+  textButton.textContent = "Сохранить";
+  // слушатели закрытия попапа
   document.addEventListener("keydown", closeEsс);
   innerPopup.addEventListener("click", closeOverlay);
 }
