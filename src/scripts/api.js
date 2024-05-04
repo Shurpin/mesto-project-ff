@@ -75,3 +75,14 @@ export const removeLike = (cardId) => {
     headers: config.headers,
   }).then(handleResponse);
 };
+
+export const changeAvatar = (link) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    //отправить запрос на сервер
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: link
+    }),
+  }).then(handleResponse);
+};

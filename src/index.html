@@ -72,9 +72,7 @@
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <span class="input__description-error form__input-error"></span>
-            <button type="submit" class="button popup__button">
-              Сохранить
-            </button>
+            <button type="submit" class="button popup__button"></button>
           </form>
         </div>
       </div>
@@ -105,9 +103,25 @@
               required
             />
             <span class="input__link-error form__input-error"></span>
-            <button type="submit" class="button popup__button">
-              Сохранить
-            </button>
+            <button type="submit" class="button popup__button"></button>
+          </form>
+        </div>
+      </div>
+      <div class="popup popup_type_avatar">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form popup__avatar" name="new-place" novalidate>
+            <input
+              id="input__link"
+              type="url"
+              name="link"
+              class="popup__input popup__avatar_type_url"
+              placeholder="Ссылка на аватар"
+              required
+            />
+            <span class="input__link-error form__input-error"></span>
+            <button type="submit" class="button popup__button"></button>
           </form>
         </div>
       </div>
@@ -119,7 +133,6 @@
         </div>
       </div>
     </div>
-
     <template id="card-template">
       <li class="places__item card">
         <img class="card__image" src="" alt="" />

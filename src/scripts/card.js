@@ -1,11 +1,6 @@
 import { openPopup } from "./modal";
 import { deleteCard, sendLike, removeLike } from "./api";
 
-// лайк
-// function addLike(evt) {
-//   evt.target.classList.toggle("card__like-button_is-active");
-// }
-
 // @todo: Функция создания карточки
 export function createCard({ item, zoomImageOut }) {
   const cardTemplate = document.querySelector("#card-template").content;
@@ -16,9 +11,7 @@ export function createCard({ item, zoomImageOut }) {
   const activePopupImage = cardElement.querySelector(".card__image");
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const cardButton = cardElement.querySelector(".card__like-button");
-  const cardButtonTwo = cardElement.querySelector(
-    ".card__like-button_is-active"
-  );
+  const cardButtonTwo = cardElement.querySelector(".card__like-button_is-active");
   const likeLengthNumber = cardElement.querySelector(".likes-number");
 
   activePopupImage.src = item.link;
@@ -26,11 +19,7 @@ export function createCard({ item, zoomImageOut }) {
   cardElement.querySelector(".card__title").textContent = item.name;
 
   // пока данные с сервера не обновились поставил дефолтное значение лайков
-  likeLengthNumber.textContent = item.likes.length;
-  // if (item.likes) {
-  // } else {
-  //   likeLengthNumber.textContent = '';
-  // }
+  likeLengthNumber.textContent = item.likes?.length;
 
   //убрал из своих карточек класс который прячет кнопку удаления карточек
   if (item.isMe) {

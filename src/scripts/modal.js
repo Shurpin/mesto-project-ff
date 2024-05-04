@@ -1,5 +1,7 @@
 // общий код
 // Закрытие попапа
+// import { loadButton } from '../index.js';
+
 export function closePopup(modalElement) {
   if (modalElement) {
     modalElement.classList.remove("popup_is-opened");
@@ -11,7 +13,9 @@ export function closePopup(modalElement) {
 // Открытие попапа
 export function openPopup(innerPopup) {
   innerPopup.classList.add("popup_is-opened");
-
+  // loadButton.textContent = 'Сохранить';
+  const loadButton = innerPopup.querySelector('.popup__button');
+  loadButton.textContent = 'Сохранить';
   document.addEventListener("keydown", closeEsс);
   innerPopup.addEventListener("click", closeOverlay);
 }

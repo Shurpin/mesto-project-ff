@@ -10,9 +10,17 @@ import {
   getInitialCards,
   getNameUser,
   additCard,
+  changeAvatar
 } from "./scripts/api.js";
-// фото профайла
+// фото профайла - аватар
 const profileImage = document.querySelector(".avatar_image");
+const formEditAvatar = document.querySelector(".popup__avatar");
+const avatarAddLink = formEditAvatar.querySelector('.popup__avatar_type_url');
+const popupEditAvatar = document.querySelector(".popup_type_avatar");
+// const formEditAvatar = document.querySelector(".profile__image");
+// const avatarAddLink = document.querySelector('popup__avatar_type_url');
+// const popupEditAvatar = document.querySelector(".popup_type_avatar");
+
 // profile
 const formFillInput = document.querySelector(".popup__form");
 const nameInput = formFillInput.querySelector(".popup__input_type_name");
@@ -43,6 +51,9 @@ const animatedPopups = document.querySelectorAll(".popup");
 const formEditNewPlace = document.querySelector(".popup__forms");
 const cardAddName = document.querySelector(".popup__input_type_card-name");
 const cardAddLink = document.querySelector(".popup__input_type_url");
+
+// индикация процесса загрузки
+export const loadButton = document.querySelector('.popup__button');
 
 //validation config
 const form = document.querySelector(".popup__form");
@@ -106,6 +117,25 @@ function handleEditProfileSubmit() {
   });
 }
 
+function handleEditAvatar(evt, formEditAvatar) {
+  evt.preventDefault();
+ const submitData =  avatarAddLink.value;
+ renderLoading(true, formEditAvatar);
+ console.log('мы тута')
+ changeAvatar(submitData)
+  .then(function (result) {
+    profileImage.src = submitData;
+    closePopup(popupEditAvatar);
+    formEditAvatar.reset();
+  })
+  .catch((err) => {
+    console.log(err); // выводим ошибку в консоль
+  })
+  .finally(() => {
+    renderLoading(false); // вызовите renderLoading
+  }); 
+}
+
 function handleInitialProfile(result) {
   // result.preventDefault();
   profileTitle.textContent = result.name;
@@ -122,6 +152,12 @@ animatedPopups.forEach((item) => {
 // Подписываемся на события сабмит
 formFillInput.addEventListener("submit", handleEditProfileSubmit);
 formEditNewPlace.addEventListener("submit", handleEditNewCardSubmit);
+formEditAvatar.addEventListener("submit", (evt) => handleEditAvatar(evt, formEditAvatar));
+
+// Подписываемся на клик по аватарке
+profileImage.addEventListener("click", function () {
+  openPopup(popupEditAvatar);
+});
 
 // подписываемся на клик "Редактировать"
 profileEditButton.addEventListener("click", function () {
@@ -181,4 +217,22 @@ Promise.all([getInitialCards(), getNameUser()])
   })
   .catch((err) => {
     console.log(err); // выводим ошибку в консоль
-  });
+  })
+  // .finally(() => {
+  //   renderLoading(false); // вызовите renderLoading
+  // }); 
+  
+
+
+  function renderLoading(isLoading, formEditAvatar) {
+    console.log('loadButton', loadButton)
+    const loadButton = formEditAvatar.querySelector('.popup__button');
+    if (isLoading) {
+      // добавьте классы, как сказано в задании
+     loadButton.textContent = 'Сохранение...';
+    } 
+    else {
+      // уберите классы
+      loadButton.textContent = '';
+    }
+  };
