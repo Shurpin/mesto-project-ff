@@ -15,7 +15,9 @@ export function openPopup(innerPopup) {
   innerPopup.classList.add("popup_is-opened");
   // добавил кнопке попапа текст
   const textButton = innerPopup.querySelector(".popup__button");
+  if (textButton) {
   textButton.textContent = "Сохранить";
+}
   // слушатели закрытия попапа
   document.addEventListener("keydown", closeEsс);
   innerPopup.addEventListener("click", closeOverlay);

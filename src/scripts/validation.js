@@ -117,11 +117,13 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
     buttonElement.classList.add(inactiveButtonClass);
-    //buttonElement.classList.add("button_inactive");
+    buttonElement.disabled = true;
+    buttonElement.value = "Disabled";
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.disabled = false;
+    buttonElement.value = "Enabled";
   }
 }
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
+

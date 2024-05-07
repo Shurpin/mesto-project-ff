@@ -82,7 +82,7 @@ export const changeAvatar = (link) => {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      avatar: link
+      avatar: link,
     }),
   }).then(handleResponse);
 };

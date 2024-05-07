@@ -11,7 +11,9 @@ export function createCard({ item, zoomImageOut }) {
   const activePopupImage = cardElement.querySelector(".card__image");
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const cardButton = cardElement.querySelector(".card__like-button");
-  const cardButtonTwo = cardElement.querySelector(".card__like-button_is-active");
+  const cardButtonTwo = cardElement.querySelector(
+    ".card__like-button_is-active"
+  );
   const likeLengthNumber = cardElement.querySelector(".likes-number");
 
   activePopupImage.src = item.link;
@@ -30,20 +32,26 @@ export function createCard({ item, zoomImageOut }) {
   }
   // отправляем лайк карточки на сервер и окрашиваем его
   cardButton.addEventListener("click", function () {
-    sendLike(item._id);
-    cardButton.classList.toggle("card__like-button_is-active");
+    sendLike(item._id).then(function (result) {
+      likeLengthNumber.textContent = result.likes.length;
+      cardButton.classList.toggle("card__like-button_is-active");
+    });
   });
 
   // окрашиваем мои лайки
   if (item.isMyLikes) {
     cardButton.classList.toggle("card__like-button_is-active");
   }
+
   // удаляем лайк с сервера
   cardButton.addEventListener("click", function () {
     if (item.isMyLikes) {
       cardButton.classList.toggle("card__like-button_is-active");
-      removeLike(item._id);
-      cardButton.classList.remove("card__like-button_is-active");
+      removeLike(item._id).then(function (result) {
+        likeLengthNumber.textContent = "";
+        likeLengthNumber.textContent = result.likes.length;
+        cardButton.classList.remove("card__like-button_is-active");
+      });
     }
   });
 

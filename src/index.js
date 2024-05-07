@@ -59,7 +59,6 @@ const cardAddLink = document.querySelector(".popup__input_type_url");
 // индикация процесса загрузки
 const loadButtonNewPlace = formEditNewPlace.querySelector(".popup__button");
 
-
 //validation config
 const form = document.querySelector(".popup__form");
 const validationConfig = {
@@ -71,10 +70,15 @@ const validationConfig = {
   errorClass: "popup__error_visible",
 };
 
-function getFormValues() {
+let ownerId = "";
+
+function getFormValues(result) {
   return {
     name: cardAddName.value,
     link: cardAddLink.value,
+    _id: result._id,
+    likes: result.likes,
+    isMe: result.owner._id === ownerId,
   };
 }
 
@@ -87,8 +91,8 @@ function zoomImageOut({ listItem, openPopup }) {
 }
 
 // Создаем новую карточку и закрываем попап
-function createAndCloseCard() {
-  const item = getFormValues();
+function createAndCloseCard(result) {
+  const item = getFormValues(result);
   const newCard = createCard({
     item,
     zoomImageOut,
@@ -102,38 +106,40 @@ function handleEditNewCardSubmit(evt, buttonElement) {
   evt.preventDefault();
   const submitData = { name: cardAddName.value, link: cardAddLink.value };
   renderLoading(true, buttonElement);
-  additCard(submitData).then(function (result) {
-    const newCard = createAndCloseCard();
-    cardContainer.prepend(newCard);
-    formEditNewPlace.reset();
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  })
-  .finally(() => {
-    renderLoading(false, buttonElement); // вызовите renderLoading
-  });
+  additCard(submitData)
+    .then(function (result) {
+      const newCard = createAndCloseCard(result);
+      cardContainer.prepend(newCard);
+      formEditNewPlace.reset();
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      renderLoading(false, buttonElement); // вызовите renderLoading
+    });
 }
 
 function handleEditProfileSubmit(evt, buttonElement) {
   const submitData = { name: nameInput.value, about: jobInput.value };
   renderLoading(true, buttonElement);
-  additProfile(submitData).then(function (result) {
-    // result.preventDefault();
-    profileTitle.textContent = result.name;
-    profileDescription.textContent = result.about;
+  additProfile(submitData)
+    .then(function (result) {
+      // result.preventDefault();
+      profileTitle.textContent = result.name;
+      profileDescription.textContent = result.about;
 
-    closePopup(popupTypeEdit);
-    nameInput.value = "";
-    jobInput.value = "";
-    formFillInput.reset();
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  })
-  .finally(() => {
-    renderLoading(false, buttonElement); // вызовите renderLoading
-  });
+      closePopup(popupTypeEdit);
+      nameInput.value = "";
+      jobInput.value = "";
+      formFillInput.reset();
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      renderLoading(false, buttonElement); // вызовите renderLoading
+    });
 }
 
 function handleEditAvatar(evt, buttonElement) {
@@ -168,9 +174,15 @@ animatedPopups.forEach((item) => {
 });
 
 // Подписываемся на события сабмит
-formFillInput.addEventListener("submit", (evt) => handleEditProfileSubmit(evt, loadButtonFillInput));
-formEditNewPlace.addEventListener("submit", (evt) => handleEditNewCardSubmit(evt, loadButtonNewPlace));
-formEditAvatar.addEventListener("submit", (evt) => handleEditAvatar(evt, loadButton));
+formFillInput.addEventListener("submit", (evt) =>
+  handleEditProfileSubmit(evt, loadButtonFillInput)
+);
+formEditNewPlace.addEventListener("submit", (evt) =>
+  handleEditNewCardSubmit(evt, loadButtonNewPlace)
+);
+formEditAvatar.addEventListener("submit", (evt) =>
+  handleEditAvatar(evt, loadButton)
+);
 
 // Подписываемся на клик по аватарке
 profileImage.addEventListener("click", function () {
@@ -216,6 +228,7 @@ enableValidation(validationConfig);
 
 Promise.all([getInitialCards(), getNameUser()])
   .then(([cardsResponse, userResponse]) => {
+    ownerId = userResponse._id;
     handleInitialProfile(userResponse);
     const mutationCards = cardsResponse.map(function (item) {
       return {
