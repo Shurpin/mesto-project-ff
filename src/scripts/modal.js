@@ -1,6 +1,3 @@
-// общий код
-// Закрытие попапа
-// import { loadButton } from '../index.js';
 
 export function closePopup(modalElement) {
   if (modalElement) {

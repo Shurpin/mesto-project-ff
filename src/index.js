@@ -12,8 +12,8 @@ import {
   additCard,
   changeAvatar,
 } from "./scripts/api.js";
-// фото профайла - аватар
-const profileImage = document.querySelector(".avatar_image");
+// фото профайла - аватар 
+const profileImageAvatar = document.querySelector(".avatar_image");
 const popupEditAvatar = document.querySelector(".popup_type_avatar");
 const formEditAvatar = document.querySelector(".popup__avatar");
 const avatarAddLink = formEditAvatar.querySelector(".popup__avatar_type_url");
@@ -79,6 +79,7 @@ function getFormValues(result) {
     _id: result._id,
     likes: result.likes,
     isMe: result.owner._id === ownerId,
+    isMyLikes: false,
   };
 }
 
@@ -143,12 +144,12 @@ function handleEditProfileSubmit(evt, buttonElement) {
 }
 
 function handleEditAvatar(evt, buttonElement) {
-  evt.preventDefault();
+  // evt.preventDefault();
   const submitData = avatarAddLink.value;
   renderLoading(true, buttonElement);
   changeAvatar(submitData)
     .then(function (result) {
-      profileImage.src = submitData;
+      profileImageAvatar.src = result.avatar;
       closePopup(popupEditAvatar);
       formEditAvatar.reset();
     })
@@ -164,8 +165,8 @@ function handleInitialProfile(result) {
   // result.preventDefault();
   profileTitle.textContent = result.name;
   profileDescription.textContent = result.about;
-  profileImage.src = result.avatar;
-  profileImage.alt = result.name;
+  profileImageAvatar.src = result.avatar;
+  profileImageAvatar.alt = result.name;
 }
 
 // добавляем класс анимации
@@ -185,7 +186,7 @@ formEditAvatar.addEventListener("submit", (evt) =>
 );
 
 // Подписываемся на клик по аватарке
-profileImage.addEventListener("click", function () {
+profileImageAvatar.addEventListener("click", function () {
   openPopup(popupEditAvatar);
 });
 
@@ -209,6 +210,7 @@ popupTypeEdit
   .addEventListener("click", function () {
     closePopup(popupTypeEdit);
   });
+
 //вешаю слушатель с событием клик на кнопку popup__close_image
 popupCloseImage.addEventListener("click", function () {
   closePopup(popupImageWrapper);
@@ -221,6 +223,11 @@ popupTypeNewCard
   .addEventListener("click", function () {
     closePopup(popupTypeNewCard);
   });
+
+  //вешаю слушатель с событием клик на кнопку с классом  popup__close
+  popupEditAvatar.querySelector(".popup__close").addEventListener("click", function () {
+  closePopup(popupEditAvatar);
+});
 
 // валидация форм
 clearValidation(form, validationConfig);
