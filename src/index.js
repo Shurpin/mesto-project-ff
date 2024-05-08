@@ -12,7 +12,7 @@ import {
   additCard,
   changeAvatar,
 } from "./scripts/api.js";
-// фото профайла - аватар 
+// фото профайла - аватар
 const profileImageAvatar = document.querySelector(".avatar_image");
 const popupEditAvatar = document.querySelector(".popup_type_avatar");
 const formEditAvatar = document.querySelector(".popup__avatar");
@@ -224,10 +224,12 @@ popupTypeNewCard
     closePopup(popupTypeNewCard);
   });
 
-  //вешаю слушатель с событием клик на кнопку с классом  popup__close
-  popupEditAvatar.querySelector(".popup__close").addEventListener("click", function () {
-  closePopup(popupEditAvatar);
-});
+//вешаю слушатель с событием клик на кнопку с классом  popup__close
+popupEditAvatar
+  .querySelector(".popup__close")
+  .addEventListener("click", function () {
+    closePopup(popupEditAvatar);
+  });
 
 // валидация форм
 clearValidation(form, validationConfig);
