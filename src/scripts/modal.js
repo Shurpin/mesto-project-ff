@@ -8,16 +8,18 @@ export function closePopup(modalElement) {
 }
 
 // Открытие попапа
-export function openPopup(innerPopup) {
-  innerPopup.classList.add("popup_is-opened");
+export function openPopup(modalElement) {
+  modalElement.classList.add("popup_is-opened");
   // добавил кнопке попапа текст
-  const textButton = innerPopup.querySelector(".popup__button");
+
+  // добавил исходный текст кнопки при открытии попапа!!! 
+  const textButton = modalElement.querySelector(".popup__button");
   if (textButton) {
   textButton.textContent = "Сохранить";
 }
   // слушатели закрытия попапа
   document.addEventListener("keydown", closeEsс);
-  innerPopup.addEventListener("click", closeOverlay);
+  modalElement.addEventListener("click", closeOverlay);
 }
 
 // Дополнительные общие функции
@@ -28,8 +30,8 @@ function closeEsс(evt) {
 }
 
 function closeOverlay(evt) {
-  const activePopup = document.querySelector(".popup_is-opened");
-  if (evt.target === activePopup) {
-    closePopup(document.querySelector(".popup_is-opened"));
+  // const activePopup = document.querySelector(".popup_is-opened");
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.currentTarget);
   }
 }

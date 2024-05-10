@@ -49,6 +49,20 @@ const setEventListeners = (formElement, validationConfig) => {
   const buttonElement = formElement.querySelector(
     validationConfig.submitButtonSelector
   );
+
+  const disableButton = (buttonElement, inactiveButtonClass) => {
+      buttonElement.classList.add(inactiveButtonClass);
+      buttonElement.disabled = true;
+  };
+
+
+  // деактивируем кнопку при 1й загрузке сайта
+  toggleButtonState(inputList, buttonElement, validationConfig.inactiveButtonClass);
+
+  formElement.addEventListener('reset', () => {
+    disableButton(buttonElement, validationConfig.inactiveButtonClass)
+  });
+
   // чтобы проверить состояние кнопки в самом начале
   toggleButtonState(
     inputList,
@@ -60,6 +74,7 @@ const setEventListeners = (formElement, validationConfig) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, validationConfig);
       // чтобы проверять его при изменении любого из полей
+      
       toggleButtonState(
         inputList,
         buttonElement,
@@ -118,12 +133,12 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     // сделай кнопку неактивной
     buttonElement.classList.add(inactiveButtonClass);
     buttonElement.disabled = true;
-    buttonElement.value = "Disabled";
+    // buttonElement.value = "Disabled";
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
-    buttonElement.value = "Enabled";
+    // buttonElement.value = "Enabled";
   }
 }
 

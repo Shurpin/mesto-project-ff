@@ -21,14 +21,14 @@ export const getInitialCards = () => {
   }).then(handleResponse);
 };
 
-export const getNameUser = () => {
+export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     //отправить запрос на сервер
     headers: config.headers,
   }).then(handleResponse);
 };
 
-export const additProfile = ({ name, about }) => {
+export const editProfile = ({ name, about }) => {
   return fetch(`${config.baseUrl}/users/me`, {
     //отправить запрос на сервер
     method: "PATCH",
@@ -40,7 +40,7 @@ export const additProfile = ({ name, about }) => {
   }).then(handleResponse);
 };
 
-export const additCard = ({ name, link }) => {
+export const addCard = ({ name, link }) => {
   return fetch(`${config.baseUrl}/cards`, {
     //отправить запрос на сервер
     method: "POST",
@@ -60,7 +60,7 @@ export const deleteCard = (cardId) => {
   }).then(handleResponse);
 };
 
-export const sendLike = (cardId) => {
+export const addLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     //отправить запрос на сервер
     method: "PUT",
