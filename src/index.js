@@ -3,7 +3,7 @@ import "./scripts/cards.js";
 import "./scripts/validation.js";
 import "./scripts/utils/constants.js";
 // import { initialCards } from "./scripts/cards.js";
-import { createCard } from "./scripts/card.js";
+import { createCard, likeCard, removeCard } from "./scripts/card.js";
 import { enableValidation, clearValidation } from "./scripts/validation.js";
 import { openPopup, closePopup } from "./scripts/modal.js";
 import {
@@ -12,9 +12,6 @@ import {
   getUserInfo,
   addCard,
   changeAvatar,
-  addLike,
-  removeLike,
-  deleteCard,
 } from "./scripts/api.js";
 
 import {
@@ -43,7 +40,7 @@ import {
   formEditNewPlace,
   cardAddName,
   cardAddLink,
-  SubmitButtonNewPlace,
+  submitButtonNewPlace,
   validationConfig,
 } from "./scripts/utils/constants.js";
 
@@ -68,34 +65,6 @@ function zoomImageOut({ listItem }) {
   openPopup(popupImageWrapper);
 }
 
-function likeCard(likesCounter, cardLikeButton, { listItem }) {
-  if (cardLikeButton.className.includes("card__like-button_is-active")) {
-    removeLike(listItem._id).then(function (result) {
-      likesCounter.textContent = result.likes.length;
-      cardLikeButton.classList.remove("card__like-button_is-active");
-    });
-  } else {
-    addLike(listItem._id)
-      .then(function (result) {
-        likesCounter.textContent = result.likes.length;
-        cardLikeButton.classList.add("card__like-button_is-active");
-      })
-      .catch((err) => {
-        console.log(err); // выводим ошибку в консоль
-      });
-  }
-}
-
-function removeCard(cardElement, { listItem }) {
-  deleteCard(listItem._id)
-    .then(function (result) {
-      cardElement.remove();
-    })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
-}
-
 // Создаем новую карточку и закрываем попап
 function createAndCloseCard(result) {
   const item = getCardData(result);
@@ -115,7 +84,7 @@ function handleEditNewCardSubmit() {
   const submitData = { name: cardAddName.value, link: cardAddLink.value };
   // const initialText = submitButton.textContent;
 
-  renderLoading(true, SubmitButtonNewPlace);
+  renderLoading(true, submitButtonNewPlace);
   addCard(submitData)
     .then(function (result) {
       const newCard = createAndCloseCard(result);
@@ -126,7 +95,7 @@ function handleEditNewCardSubmit() {
       console.log(err); // выводим ошибку в консоль
     })
     .finally(() => {
-      renderLoading(false, SubmitButtonNewPlace);
+      renderLoading(false, submitButtonNewPlace);
     });
 }
 

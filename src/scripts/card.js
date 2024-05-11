@@ -1,5 +1,36 @@
-import { deleteCard } from "./api";
+import { deleteCard, addLike, removeLike } from "./api.js";
 const cardTemplate = document.querySelector("#card-template").content;
+
+export function likeCard(likesCounter, cardLikeButton, { listItem }) {
+  if (cardLikeButton.className.includes("card__like-button_is-active")) {
+    removeLike(listItem._id).then(function (result) {
+      likesCounter.textContent = result.likes.length;
+      cardLikeButton.classList.remove("card__like-button_is-active");
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
+  } else {
+    addLike(listItem._id)
+      .then(function (result) {
+        likesCounter.textContent = result.likes.length;
+        cardLikeButton.classList.add("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.log(err); // выводим ошибку в консоль
+      });
+  }
+}
+
+export function removeCard(cardElement, { listItem }) {
+  deleteCard(listItem._id)
+    .then(function (result) {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
+}
 
 // @todo: Функция создания карточки
 export function createCard({ item, zoomImageOut, likeCard, removeCard }) {
@@ -32,15 +63,13 @@ export function createCard({ item, zoomImageOut, likeCard, removeCard }) {
 
   // отправляем лайк карточки на сервер и окрашиваем его
   cardLikeButton.addEventListener("click", () =>
-    likeCard(likesCounter, cardLikeButton, {listItem: item})
+    likeCard(likesCounter, cardLikeButton, { listItem: item })
   );
 
   deleteButton.addEventListener("click", () =>
-    removeCard(cardElement, {listItem: item})
+    removeCard(cardElement, { listItem: item })
   );
 
-  cardImage.addEventListener("click", () =>
-    zoomImageOut({ listItem: item})
-  );
+  cardImage.addEventListener("click", () => zoomImageOut({ listItem: item }));
   return cardElement;
 }

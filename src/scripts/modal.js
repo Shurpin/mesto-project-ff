@@ -3,20 +3,13 @@ export function closePopup(modalElement) {
   if (modalElement) {
     modalElement.classList.remove("popup_is-opened");
     document.removeEventListener("keydown", closeEsс);
-    document.removeEventListener("click", closeOverlay);
+    modalElement.removeEventListener("click", closeOverlay);
   }
 }
 
 // Открытие попапа
 export function openPopup(modalElement) {
   modalElement.classList.add("popup_is-opened");
-  // добавил кнопке попапа текст
-
-  // добавил исходный текст кнопки при открытии попапа!!! 
-  // const textButton = modalElement.querySelector(".popup__button");
-//   if (textButton) {
-//   textButton.textContent = "Сохранить";
-// }
   // слушатели закрытия попапа
   document.addEventListener("keydown", closeEsс);
   modalElement.addEventListener("click", closeOverlay);

@@ -44,7 +44,7 @@ export const formEditNewPlace = document.querySelector(".popup__forms");
 export const cardAddName = document.querySelector(".popup__input_type_card-name");
 export const cardAddLink = document.querySelector(".popup__input_type_url");
 // индикация процесса загрузки
-export const SubmitButtonNewPlace = formEditNewPlace.querySelector(".popup__button");
+export const submitButtonNewPlace = formEditNewPlace.querySelector(".popup__button");
 
 //validation config
 // export const form = document.querySelector(".popup__form");

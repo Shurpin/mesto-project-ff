@@ -51,16 +51,19 @@ const setEventListeners = (formElement, validationConfig) => {
   );
 
   const disableButton = (buttonElement, inactiveButtonClass) => {
-      buttonElement.classList.add(inactiveButtonClass);
-      buttonElement.disabled = true;
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.disabled = true;
   };
 
-
   // деактивируем кнопку при 1й загрузке сайта
-  toggleButtonState(inputList, buttonElement, validationConfig.inactiveButtonClass);
+  toggleButtonState(
+    inputList,
+    buttonElement,
+    validationConfig.inactiveButtonClass
+  );
 
-  formElement.addEventListener('reset', () => {
-    disableButton(buttonElement, validationConfig.inactiveButtonClass)
+  formElement.addEventListener("reset", () => {
+    disableButton(buttonElement, validationConfig.inactiveButtonClass);
   });
 
   // чтобы проверить состояние кнопки в самом начале
@@ -74,7 +77,7 @@ const setEventListeners = (formElement, validationConfig) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, validationConfig);
       // чтобы проверять его при изменении любого из полей
-      
+
       toggleButtonState(
         inputList,
         buttonElement,
@@ -131,14 +134,10 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.disabled = true;
-    // buttonElement.value = "Disabled";
+    disableButton(buttonElement, inactiveButtonClass);
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
-    // buttonElement.value = "Enabled";
   }
 }
-
