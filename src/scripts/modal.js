@@ -13,10 +13,10 @@ export function openPopup(modalElement) {
   // добавил кнопке попапа текст
 
   // добавил исходный текст кнопки при открытии попапа!!! 
-  const textButton = modalElement.querySelector(".popup__button");
-  if (textButton) {
-  textButton.textContent = "Сохранить";
-}
+  // const textButton = modalElement.querySelector(".popup__button");
+//   if (textButton) {
+//   textButton.textContent = "Сохранить";
+// }
   // слушатели закрытия попапа
   document.addEventListener("keydown", closeEsс);
   modalElement.addEventListener("click", closeOverlay);
