@@ -42,6 +42,11 @@ const checkInputValidity = (formElement, inputElement, validationConfig) => {
   }
 };
 
+const disableButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.disabled = true;
+};
+
 const setEventListeners = (formElement, validationConfig) => {
   const inputList = Array.from(
     formElement.querySelectorAll(validationConfig.inputSelector)
@@ -49,11 +54,6 @@ const setEventListeners = (formElement, validationConfig) => {
   const buttonElement = formElement.querySelector(
     validationConfig.submitButtonSelector
   );
-
-  const disableButton = (buttonElement, inactiveButtonClass) => {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.disabled = true;
-  };
 
   // деактивируем кнопку при 1й загрузке сайта
   toggleButtonState(
